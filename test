@@ -1,0 +1,19 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: my-service          # имя компонента (уникально в пределах каталога)
+  title: My Service         # человекочитаемое название (опционально)
+  description: My awesome backend service
+  annotations:
+    github.com/project-slug: my-org/my-service    # для GitHub интеграции
+    backstage.io/techdocs-ref: dir:.              # если есть документация
+    # Добавь любые интеграции: sentry, vault, sonarqube, circleci и т.д.
+  tags:
+    - python
+    - backend
+spec:
+  type: service             # service, website, library и др.
+  owner: team-devops        # команда-владелец (Group или User, например group:team-devops)
+  lifecycle: production     # production, experimental, deprecated
+  system: core-platform     # опционально: к какой системе относится
+  dependsOn: []             # если зависит от других компонентов, например [component:another-service]
