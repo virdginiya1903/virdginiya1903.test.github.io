@@ -1,0 +1,79 @@
+# Описание системы
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: examples
+  title: Примеры (Examples)
+  description: Демонстрационная система для каталога Backstage
+spec:
+  owner: virdginiya1903
+
+---
+# Основной сервис
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: main-service
+  title: Основной сервис
+  description: Основной backend сервис системы
+spec:
+  type: service
+  lifecycle: production
+  owner: virdginiya1903
+  system: examples
+
+---
+# Библиотека 1
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: utils-lib
+  title: Библиотека утилит
+  description: Общая библиотека для сервисов и плагинов
+spec:
+  type: library
+  lifecycle: production
+  owner: virdginiya1903
+  system: examples
+
+---
+# Библиотека 2
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: data-models-lib
+  title: Модели данных
+  description: Общие типы и схемы данных
+spec:
+  type: library
+  lifecycle: experimental
+  owner: virdginiya1903
+  system: examples
+
+---
+# Плагин 1
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: plugin-auth
+  title: Плагин аутентификации
+  description: Фронтовый плагин авторизации для портала
+spec:
+  type: plugin
+  lifecycle: production
+  owner: virdginiya1903
+  system: examples
+
+---
+# Плагин 2
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: plugin-rc
+  title: Remote Config UI
+  description: Плагин для управления Remote Config
+spec:
+  type: plugin
+  lifecycle: experimental
+  owner: virdginiya1903
+  system: examples
