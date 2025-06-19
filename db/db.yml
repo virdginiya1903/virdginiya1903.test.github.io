@@ -1,0 +1,9 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: my-db
+  description: PostgreSQL для My Service
+spec:
+  type: database
+  owner: team-devops
+  system: core-platform
