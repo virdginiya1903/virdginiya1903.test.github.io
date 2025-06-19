@@ -1,0 +1,124 @@
+# --- System
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: examples
+  description: Примерная система с разными владельцами компонентов
+spec:
+  owner: virdginiya1903
+
+# --- Группа основной команды
+---
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: virdginiya1903
+  description: Основная команда-разработчик
+spec:
+  type: team
+  profile:
+    displayName: virdginiya1903
+    email: virdginiya1903@example.com
+  members: []
+  children: []
+  parent: null
+
+# --- Группа гостей
+---
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: guests
+  description: Внешние участники и гости платформы
+spec:
+  type: team
+  profile:
+    displayName: Гости платформы
+    email: guests@example.com
+  members: []
+  children: []
+  parent: null
+
+# --- Сервис основной команды
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: payment-service
+  title: Payment Service
+  description: Сервис оплаты, поддерживается основной командой
+spec:
+  type: service
+  lifecycle: production
+  owner: virdginiya1903
+  system: examples
+
+# --- Сервис гостей
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: public-api
+  title: Public API
+  description: Открытый API, поддерживается гостями
+spec:
+  type: service
+  lifecycle: production
+  owner: guests
+  system: examples
+
+# --- Библиотека основной команды
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: core-utils
+  title: Core Utils Library
+  description: Библиотека утилит, основная команда
+spec:
+  type: library
+  lifecycle: production
+  owner: virdginiya1903
+  system: examples
+
+# --- Библиотека гостей
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: guest-ui-kit
+  title: Guest UI Kit
+  description: UI-компоненты для гостей
+spec:
+  type: library
+  lifecycle: experimental
+  owner: guests
+  system: examples
+
+# --- Плагин основной команды
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: admin-tools
+  title: Admin Tools Plugin
+  description: Плагин для админов, основной владелец
+spec:
+  type: plugin
+  lifecycle: production
+  owner: virdginiya1903
+  system: examples
+
+# --- Плагин гостей
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: analytics-plugin
+  title: Analytics Plugin
+  description: Плагин аналитики для гостей
+spec:
+  type: plugin
+  lifecycle: experimental
+  owner: guests
+  system: examples
