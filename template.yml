@@ -1,68 +1,67 @@
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
-# some metadata about the template itself
 metadata:
-  name: v1beta3-demo
-  title: Test Action template
-  description: scaffolder v1beta3 template demo
+  name: react-service-demo
+  title: Шаблон React-сервиса
+  description: Быстрый старт нового React-сервиса по корпоративному стандарту.
 spec:
-  owner: backstage/techdocs-core
+  owner: frontend-team
   type: service
 
-  # these are the steps which are rendered in the frontend with the form input
   parameters:
-    - title: Fill in some steps
+    - title: Основная информация
       required:
         - name
+        - description
       properties:
         name:
-          title: Name
+          title: Название сервиса
           type: string
-          description: Unique name of the component
-          ui:autofocus: true
-          ui:options:
-            rows: 5
-    - title: Choose a location
-      required:
-        - repoUrl
-      properties:
+          description: Уникальное имя для создаваемого сервиса (например, my-react-app)
+        description:
+          title: Описание сервиса
+          type: string
+          description: Краткое описание создаваемого сервиса
         repoUrl:
-          title: Repository Location
+          title: Ссылка на репозиторий (GitHub)
           type: string
           ui:field: RepoUrlPicker
           ui:options:
             allowedHosts:
               - github.com
 
-  # here's the steps that are executed in series in the scaffolder backend
   steps:
     - id: fetch-base
-      name: Fetch Base
+      name: Скачать шаблон
       action: fetch:template
       input:
-        url: ./template
+        url: ./skeleton
         values:
           name: ${{ parameters.name }}
-
-    - id: fetch-docs
-      name: Fetch Docs
-      action: fetch:plain
-      input:
-        targetPath: ./community
-        url: https://github.com/backstage/community/tree/main/backstage-community-sessions
+          description: ${{ parameters.description }}
 
     - id: publish
-      name: Publish
+      name: Опубликовать в GitHub
       action: publish:github
       input:
-        allowedHosts: ['github.com']
-        description: This is ${{ parameters.name }}
         repoUrl: ${{ parameters.repoUrl }}
-        defaultBranch: 'main'
+        description: ${{ parameters.description }}
+        defaultBranch: main
+        protectDefaultBranch: true
+        repoVisibility: public
+        allowedHosts: ['github.com']
 
     - id: register
-      name: Register
+      name: Зарегистрировать в Backstage
       action: catalog:register
       input:
         repoContentsUrl: ${{ steps['publish'].output.repoContentsUrl }}
         catalogInfoPath: '/catalog-info.yaml'
+
+  output:
+    links:
+      - title: Перейти в репозиторий
+        url: ${{ steps['publish'].output.remoteUrl }}
+      - title: Открыть сервис в Backstage
+        icon: catalog
+        url: ${{ steps['register'].output.entityRef | backstageUrl }}
